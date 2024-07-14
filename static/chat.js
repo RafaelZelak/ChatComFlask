@@ -1,15 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
     var socket = io();
+    var loggedInUsername = window.loggedInUsername;
     var username = "{{ username }}"; // Obtendo o nome de usuário da sessão Flask
 
+    
     socket.on('message', function(msg){
         console.log('Mensagem recebida:', msg);
+
+        var msg_username = msg.split(':')[0].trim();
+        
+        console.log(msg_username + " -> " + loggedInUsername);
 
         var item = document.createElement('div');
         item.className = 'message-container';
 
         var img = document.createElement('img');
         img.src = 'https://via.placeholder.com/50'; // Imagem placeholder
+        img.className = 'message-img'; // Adicionar classe para estilização CSS
 
         var messageDiv = document.createElement('div');
         messageDiv.className = 'message';
@@ -27,16 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
         timestamp.className = 'timestamp';
         timestamp.textContent = now.toLocaleTimeString();
 
-        if (msg.startsWith(username + ": ")) {
-            item.classList.add('my-message');
-            usernameDiv.textContent = username;
-            messageContent.textContent = msg.replace(username + ": ", ""); // Remover o prefixo
-        } else {
-            item.classList.add('other-message');
-            var msgParts = msg.split(": ");
-            usernameDiv.textContent = msgParts[0]; // Nome de usuário
-            messageContent.textContent = msgParts.slice(1).join(": "); // Mensagem
-        }
+        var msgParts = msg.split(": ");
+        usernameDiv.textContent = msgParts[0];
+        messageContent.textContent = msgParts.slice(1).join(": "); // Remover o prefixo
 
         messageText.appendChild(messageContent);
 
@@ -44,8 +44,17 @@ document.addEventListener('DOMContentLoaded', () => {
         messageDiv.appendChild(messageText);
         messageDiv.appendChild(timestamp);
 
-        item.appendChild(img);
-        item.appendChild(messageDiv);
+        if (msg_username === loggedInUsername) {
+            item.classList.add('my-message');
+            // Posicionar a imagem à direita e o conteúdo à esquerda
+            item.appendChild(messageDiv);
+            item.appendChild(img);
+        } else {
+            item.classList.add('other-message');
+            // Posicionar a imagem à esquerda e o conteúdo à direita
+            item.appendChild(img);
+            item.appendChild(messageDiv);
+        }
 
         document.getElementById('messages').appendChild(item);
         document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;

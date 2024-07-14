@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, session, flash
+from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify
 from flask_socketio import SocketIO, send, emit, join_room, leave_room
 import sqlite3
 
@@ -51,7 +51,7 @@ def login():
     user = validate_login(username, password)
     
     if user:
-        session['username'] = username
+        session['username'] = username  # Armazena o nome de usuário na sessão
         return redirect(url_for('dashboard'))
     else:
         flash('Invalid username or password. Please try again.')

@@ -16,10 +16,6 @@ body {
     padding: 0.5rem;
     transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
-.message-container:hover {
-    transform: translateX(5px);
-    background-color: rgba(240, 240, 240, 0.5);
-}
 .message-container img {
     width: 50px;
     height: 50px;
@@ -27,6 +23,8 @@ body {
     margin-right: 0.75rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+
 .message-container .message {
     max-width: 75%;
     background-color: #edf2f7;
@@ -48,7 +46,7 @@ body {
     box-shadow: -2px 2px 0 2px #edf2f7;
 }
 .message-container .message:hover {
-    background-color: #e2e8f0;
+    background-color: #d1fff77a;
 }
 .message-container .message .timestamp {
     font-size: 0.75rem;
@@ -147,7 +145,6 @@ button:hover .send-icon {
     font-size: 0.8em;
     color: #666;
     margin-top: 5px;
-    margin-bottom: 4.2%;
 }
 
 .profile-img {
@@ -189,9 +186,22 @@ button:hover .send-icon {
     bottom: 5px;
     right: 10px;
 }
-.message-content {
-    display: inline-block;
-    word-wrap: break-word; 
-    overflow-wrap: break-word; 
-    width: 100%;
+.message-container {
+    display: flex;
+    align-items: flex-start;
+    margin: 10px 0;
+}
+
+.my-message {
+    justify-content: flex-end;
+}
+
+.other-message {
+    justify-content: flex-start;
+}
+
+
+.my-message .message {
+    margin-left: auto; /* Adicionar margem automática à esquerda para empurrar a mensagem para a direita */
+    margin-right: 20px; /* Adicionar espaçamento entre a mensagem e a borda do contêiner */
 }

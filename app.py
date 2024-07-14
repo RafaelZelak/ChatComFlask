@@ -80,12 +80,10 @@ def logout():
 @socketio.on('message')
 def handle_message(data):
     username = session.get('username')
-    print(data)
     if username:
-        print(username)
-        print(data)
-        message = f"{username}: {data}"
+        message = f"{username}: {data.split(': ', 1)[-1]}"  # Evitar duplicação do nome de usuário
         send(message, broadcast=True)
+
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

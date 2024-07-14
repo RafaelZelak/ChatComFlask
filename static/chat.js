@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     var username = "{{ username }}"; // Obtendo o nome de usuário da sessão Flask
 
     socket.on('message', function(msg){
+        console.log('Mensagem recebida:', msg);
+
         var item = document.createElement('div');
         item.className = 'message-container';
 
@@ -12,22 +14,33 @@ document.addEventListener('DOMContentLoaded', () => {
         var messageDiv = document.createElement('div');
         messageDiv.className = 'message';
 
-        var messageText = document.createElement('div');
-        
-        // Diferenciar mensagens e remover o prefixo
-        if (msg.startsWith(username + ": ")) {
-            item.classList.add('my-message');
-            messageText.textContent = msg.replace(username + ": ", ""); // Remover o prefixo
-        } else {
-            item.classList.add('other-message');
-            messageText.textContent = msg;
-        }
+        var usernameDiv = document.createElement('div');
+        usernameDiv.className = 'username';
 
-        var timestamp = document.createElement('div');
+        var messageText = document.createElement('div');
+        messageText.className = 'message-text';
+
+        var messageContent = document.createElement('span');
+        var timestamp = document.createElement('span');
         var now = new Date();
+
         timestamp.className = 'timestamp';
         timestamp.textContent = now.toLocaleTimeString();
 
+        if (msg.startsWith(username + ": ")) {
+            item.classList.add('my-message');
+            usernameDiv.textContent = username;
+            messageContent.textContent = msg.replace(username + ": ", ""); // Remover o prefixo
+        } else {
+            item.classList.add('other-message');
+            var msgParts = msg.split(": ");
+            usernameDiv.textContent = msgParts[0]; // Nome de usuário
+            messageContent.textContent = msgParts.slice(1).join(": "); // Mensagem
+        }
+
+        messageText.appendChild(messageContent);
+
+        messageDiv.appendChild(usernameDiv);
         messageDiv.appendChild(messageText);
         messageDiv.appendChild(timestamp);
 
@@ -43,6 +56,7 @@ function sendMessage() {
     var message = document.getElementById('message').value;
     var socket = io();
     var username = "{{ username }}";
+    console.log('Enviando mensagem:', username + ": " + message);
     socket.send(username + ": " + message);
     document.getElementById('message').value = '';
 }

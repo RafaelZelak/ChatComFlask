@@ -147,6 +147,7 @@ button:hover .send-icon {
     font-size: 0.8em;
     color: #666;
     margin-top: 5px;
+    margin-bottom: 4.2%;
 }
 
 .profile-img {
@@ -155,4 +156,42 @@ button:hover .send-icon {
     border-radius: 50%;
     margin-left: 10px;
     margin-right: 10px;
+}
+
+.username {
+    font-size: 0.8em;
+    color: #55555579;
+}
+.message-container {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+}
+.message {
+    margin-left: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    min-width: 200px;
+    max-width: 600px; 
+    position: relative;
+    display: inline-block;
+}
+.my-message .message {
+    background-color: #d1fff428;
+}
+.other-message .message {
+    background-color: #d1fff428;
+}
+.timestamp {
+    font-size: 0.8em;
+    color: #888;
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+}
+.message-content {
+    display: inline-block;
+    word-wrap: break-word; 
+    overflow-wrap: break-word; 
+    width: 100%;
 }

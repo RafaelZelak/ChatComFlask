@@ -7,26 +7,32 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="flex items-center justify-center h-screen">
-    <div class="container w-full max-w-3xl p-6">
-        <h1 class="text-4xl font-bold mb-6 text-center text-gray-700">Dashboard</h1>
-        <h2 class="text-2xl mb-4">Welcome, {{ username }}!</h2>
-        <form action="{{ url_for('create_chat') }}" method="post">
-            <input type="text" name="chat_name" placeholder="Enter chat name" class="p-2 border border-gray-300 rounded" required>
-            <button type="submit" class="custom-button p-2 bg-blue-500 text-white rounded">
-                Create Chat
+<body class="flex items-center justify-center h-screen bg-gradient-to-r from-purple-600 to-indigo-600">
+    <div class="container max-w-3xl bg-white p-8 rounded-lg shadow-lg relative">
+        <div class="absolute top-4 left-7 text-gray-700">
+            <h2 class="text-xl font-semibold">Olá, {{ username }}!</h2>
+        </div>
+        <h1 class="text-4xl font-extrabold mb-8 text-center text-gray-800">Crie uma sala!</h1>
+        <form action="{{ url_for('create_chat') }}" method="post" class="flex items-center space-x-4 mb-6 justify-center">
+            <input type="text" name="chat_name" placeholder="Nome do Chat" class="flex-grow p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <button type="submit" class="p-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold rounded-lg shadow-lg hover:from-blue-600 hover:to-blue-800 transition duration-300">
+                Criar Chat
             </button>
         </form>
-        <h2 class="text-2xl mt-6 mb-4">Your Chats</h2>
-        <ul>
-            {% for chat in chats %}
-            <li>
-                <a href="{{ url_for('chat', chat_id=chat[0]) }}" class="text-blue-500">{{ chat[1] }}</a>
-            </li>
-            {% endfor %}
-        </ul>
-        <a href="{{ url_for('logout') }}" class="custom-button p-2 bg-red-500 text-white rounded mt-6 block text-center">
-            Logout
+        <h2 class="text-2xl font-semibold mb-4 text-gray-700">Chats:</h2>
+        <div class="overflow-y-auto max-h-80 salas">
+            <ul class="space-y-4">
+                {% for chat in chats %}
+                <li class="p-1.5 bg-gray-50 rounded-lg shadow-md hover:bg-gray-200 transition duration-300">
+                    <a href="{{ url_for('chat', chat_id=chat[0]) }}" class="block text-lg text-gray-800 font-medium p-3 rounded-lg hover:bg-gray-200 transition duration-300">
+                        {{ chat[1] }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <a href="{{ url_for('logout') }}" class="block mt-10 p-2 bg-red-300 text-white font-semibold rounded-lg text-center shadow-lg hover:bg-red-400 transition duration-300">
+            Sair
         </a>
     </div>
 </body>

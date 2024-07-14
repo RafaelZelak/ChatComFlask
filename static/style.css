@@ -64,6 +64,11 @@ body {
     scrollbar-width: thin;
     scrollbar-color: #dfdfdf #f0f0f0;
 }
+
+.salas{
+    scrollbar-width: thin;
+    scrollbar-color: #dfdfdf #f0f0f0;
+}
 #message {
     border-top-left-radius: 1rem;
     border-bottom-left-radius: 1rem;
@@ -174,10 +179,10 @@ button:hover .send-icon {
     display: inline-block;
 }
 .my-message .message {
-    background-color: #d1fff428;
+    background-color: #84c3ff44;
 }
 .other-message .message {
-    background-color: #d1fff428;
+    background-color: #85ffe228;
 }
 .timestamp {
     font-size: 0.8em;

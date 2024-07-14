@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='chat.js') }}"></script>
+</head>
+<body class="flex items-center justify-center h-screen">
+    <div class="container w-full max-w-3xl p-6">
+        <h1 class="text-4xl font-bold mb-6 text-center text-gray-700">Chat Room</h1>
+        <div id="messages" class="overflow-auto h-96"></div>
+        <div class="flex mt-6">
+            <input id="message" class="flex-grow p-2 border border-gray-300 rounded-l" placeholder="Type a message..." autocomplete="off"/>
+            <button onclick="sendMessage()" class="custom-button p-2 bg-blue-500 text-white rounded-r">
+                Send
+                <svg class="send-icon ml-2 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M2.94 1.53l.84 3.36c.1.4.38.73.76.9L8.5 7.6a.5.5 0 01.29.45v5a1 1 0 001 1h1a1 1 0 001-1v-5a.5.5 0 01.29-.45l4-2c.38-.17.66-.5.76-.9l.84-3.36a.5.5 0 00-.68-.57L2.6 4.2a.5.5 0 00-.24.7l.58 1.16zm1.72 2.63L8 4.73V9h-.5A1.5 1.5 0 016 7.5v-1L3.66 4.9zM11 10.5v4h1v-4h-1z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</body>
+</html>

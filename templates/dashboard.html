@@ -23,7 +23,7 @@
         <div class="overflow-y-auto max-h-80 salas">
             <ul class="space-y-4">
                 {% for chat in chats %}
-                <li class="p-1.5 bg-gray-50 rounded-lg shadow-md hover:bg-gray-200 transition duration-300">
+                <li class="p-1 bg-gray-50 rounded-lg shadow-md hover:bg-gray-200 transition duration-300">
                     <a href="{{ url_for('chat', chat_id=chat[0]) }}" class="block text-lg text-gray-800 font-medium p-3 rounded-lg hover:bg-gray-200 transition duration-300">
                         {{ chat[1] }}
                     </a>

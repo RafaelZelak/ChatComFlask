@@ -15,7 +15,7 @@
 </head>
 <body class="flex items-center justify-center h-screen">
     <div class="container w-full max-w-3xl p-6">
-        <h1 class="text-4xl font-bold mb-6 text-center text-gray-700">Chat Room: {{ chat_name }}</h1>
+        <h1 class="text-4xl font-bold mb-6 text-center text-gray-700">Chat: {{ chat_name }}</h1>
         <div id="messages" class="overflow-auto h-96">
             {% for message in messages %}
             <div class="message-container {% if message[2] == session['username'] %} my-message {% else %} other-message {% endif %}">

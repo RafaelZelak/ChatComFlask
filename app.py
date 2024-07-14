@@ -116,14 +116,14 @@ def handle_join(data):
     username = session.get('username')
     room = data['room']
     join_room(room)
-    send(username + ' has entered the room.', room=room)
+    send(username + ' entrou no chat', room=room)
 
 @socketio.on('leave')
 def handle_leave(data):
     username = session.get('username')
     room = data['room']
     leave_room(room)
-    send(username + ' has left the room.', room=room)
+    send(username + ' entrou no chat', room=room)
 
 @socketio.on('message')
 def handle_message(data):

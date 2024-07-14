@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.on('message', function(msg) {
 
         var msg_username = msg.split(':')[0].trim();
-        var isSystemMessage = msg.includes('has entered the room') || msg.includes('has left the room');
+        var isSystemMessage = msg.includes('entrou no chat') || msg.includes('saiu do chat');
         
         if (isSystemMessage) {
             var item = document.createElement('div');

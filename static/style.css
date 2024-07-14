@@ -205,3 +205,10 @@ button:hover .send-icon {
     margin-left: auto; /* Adicionar margem automática à esquerda para empurrar a mensagem para a direita */
     margin-right: 20px; /* Adicionar espaçamento entre a mensagem e a borda do contêiner */
 }
+
+.system-message {
+    width: 100%;
+    font-size: 0.9em;
+    color: #666;
+    margin: 5px 0;
+}

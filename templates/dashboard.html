@@ -4,25 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="flex">
-    <div class="w-64 h-screen bg-gray-800 text-white flex flex-col">
-        <div class="p-4 text-xl font-bold">Dashboard</div>
-        <ul class="flex-grow">
-            <li class="p-4 hover:bg-gray-700"><a href="#">Home</a></li>
-            <li class="p-4 hover:bg-gray-700"><a href="#">Profile</a></li>
-            <li class="p-4 hover:bg-gray-700"><a href="#">Settings</a></li>
+<body class="flex items-center justify-center h-screen">
+    <div class="container w-full max-w-3xl p-6">
+        <h1 class="text-4xl font-bold mb-6 text-center text-gray-700">Dashboard</h1>
+        <h2 class="text-2xl mb-4">Welcome, {{ username }}!</h2>
+        <form action="{{ url_for('create_chat') }}" method="post">
+            <input type="text" name="chat_name" placeholder="Enter chat name" class="p-2 border border-gray-300 rounded" required>
+            <button type="submit" class="custom-button p-2 bg-blue-500 text-white rounded">
+                Create Chat
+            </button>
+        </form>
+        <h2 class="text-2xl mt-6 mb-4">Your Chats</h2>
+        <ul>
+            {% for chat in chats %}
+            <li>
+                <a href="{{ url_for('chat', chat_id=chat[0]) }}" class="text-blue-500">{{ chat[1] }}</a>
+            </li>
+            {% endfor %}
         </ul>
-        <div class="p-4">
-            <a href="{{ url_for('logout') }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Logout</a>
-        </div>
-    </div>
-    <div class="flex-grow p-6 bg-gray-100">
-        <h1 class="text-2xl font-bold mb-4">Welcome, {{ username }}!</h1>
-        <div class="bg-white p-6 rounded shadow-md">
-            <p>Placeholder for main content...</p>
-        </div>
+        <a href="{{ url_for('logout') }}" class="custom-button p-2 bg-red-500 text-white rounded mt-6 block text-center">
+            Logout
+        </a>
     </div>
 </body>
 </html>

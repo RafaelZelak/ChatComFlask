@@ -14,6 +14,14 @@ def validate_login(username, password):
     conn.close()
     return user
 
+def get_chats():
+    conn = sqlite3.connect('login.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM chats')
+    chats = cursor.fetchall()
+    conn.close()
+    return chats
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -61,14 +69,40 @@ def login():
 def dashboard():
     if 'username' in session:
         username = session['username']
-        return render_template('dashboard.html', username=username)
+        chats = get_chats()
+        return render_template('dashboard.html', username=username, chats=chats)
     else:
         return redirect(url_for('index'))
 
-@app.route('/chat')
-def chat():
+@app.route('/create_chat', methods=['POST'])
+def create_chat():
+    chat_name = request.form['chat_name']
+    
+    conn = sqlite3.connect('login.db')
+    cursor = conn.cursor()
+    
+    cursor.execute('INSERT INTO chats (name) VALUES (?)', (chat_name,))
+    
+    conn.commit()
+    conn.close()
+    
+    return redirect(url_for('dashboard'))
+
+@app.route('/chat/<int:chat_id>')
+def chat(chat_id):
     if 'username' in session:
-        return render_template('chat.html', username=session['username'])
+        conn = sqlite3.connect('login.db')
+        cursor = conn.cursor()
+        
+        cursor.execute('SELECT name FROM chats WHERE id = ?', (chat_id,))
+        chat_name = cursor.fetchone()[0]
+        
+        cursor.execute('SELECT * FROM messages WHERE chat_id = ?', (chat_id,))
+        messages = cursor.fetchall()
+        
+        conn.close()
+        
+        return render_template('chat.html', username=session['username'], chat_name=chat_name, messages=messages, chat_id=chat_id)
     else:
         return redirect(url_for('index'))
 
@@ -77,13 +111,31 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
 
+@socketio.on('join')
+def handle_join(data):
+    username = session.get('username')
+    room = data['room']
+    join_room(room)
+    send(username + ' has entered the room.', room=room)
+
+@socketio.on('leave')
+def handle_leave(data):
+    username = session.get('username')
+    room = data['room']
+    leave_room(room)
+    send(username + ' has left the room.', room=room)
+
 @socketio.on('message')
 def handle_message(data):
     username = session.get('username')
-    if username:
-        message = f"{username}: {data.split(': ', 1)[-1]}"  # Evitar duplicação do nome de usuário
-        send(message, broadcast=True)
-
+    room = data['room']
+    message = f"{username}: {data['message']}"
+    conn = sqlite3.connect('login.db')
+    cursor = conn.cursor()
+    cursor.execute('INSERT INTO messages (chat_id, username, message) VALUES (?, ?, ?)', (data['room'], username, data['message']))
+    conn.commit()
+    conn.close()
+    send(message, room=room)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     var socket = io();
     var loggedInUsername = window.loggedInUsername;
-    var username = "{{ username }}"; // Obtendo o nome de usuário da sessão Flask
+    var chatId = window.chatId;
 
-    
+    socket.emit('join', { room: chatId });
+
     socket.on('message', function(msg){
         console.log('Mensagem recebida:', msg);
 
@@ -64,8 +65,9 @@ document.addEventListener('DOMContentLoaded', () => {
 function sendMessage() {
     var message = document.getElementById('message').value;
     var socket = io();
+    var chatId = window.chatId;
     var username = "{{ username }}";
     console.log('Enviando mensagem:', username + ": " + message);
-    socket.send(username + ": " + message);
+    socket.emit('message', { room: chatId, message: message });
     document.getElementById('message').value = '';
 }

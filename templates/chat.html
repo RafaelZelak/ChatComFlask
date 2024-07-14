@@ -9,13 +9,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script>
         window.loggedInUsername = "{{ session['username'] }}";
+        window.chatId = "{{ chat_id }}";
     </script>
     <script src="{{ url_for('static', filename='chat.js') }}" data-username="{{ session['username'] }}"></script>
 </head>
 <body class="flex items-center justify-center h-screen">
     <div class="container w-full max-w-3xl p-6">
-        <h1 class="text-4xl font-bold mb-6 text-center text-gray-700">Chat Room</h1>
-        <div id="messages" class="overflow-auto h-96"></div>
+        <h1 class="text-4xl font-bold mb-6 text-center text-gray-700">Chat Room: {{ chat_name }}</h1>
+        <div id="messages" class="overflow-auto h-96">
+            {% for message in messages %}
+            <div class="message-container {% if message[2] == session['username'] %} my-message {% else %} other-message {% endif %}">
+                <img src="https://via.placeholder.com/50" class="message-img">
+                <div class="message">
+                    <div class="username">{{ message[2] }}</div>
+                    <div class="message-text">{{ message[3] }}</div>
+                    <span class="timestamp">{{ message[4] }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
         <div class="flex mt-6">
             <input id="message" class="flex-grow p-2 border border-gray-300 rounded-l" placeholder="Type a message..." autocomplete="off"/>
             <button onclick="sendMessage()" class="custom-button p-2 bg-blue-500 text-white rounded-r">

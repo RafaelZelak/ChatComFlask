@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.emit('join', { room: chatId });
 
     socket.on('message', function(msg) {
-        console.log('Mensagem recebida:', msg);
 
         var msg_username = msg.split(':')[0].trim();
         var isSystemMessage = msg.includes('has entered the room') || msg.includes('has left the room');
@@ -17,14 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
             item.textContent = msg;
             document.getElementById('messages').appendChild(item);
         } else {
-            console.log(msg_username + " -> " + loggedInUsername);
 
             var item = document.createElement('div');
             item.className = 'message-container';
 
             var img = document.createElement('img');
-            img.src = 'https://via.placeholder.com/50'; // Imagem placeholder
-            img.className = 'message-img'; // Adicionar classe para estilização CSS
+            img.src = 'https://via.placeholder.com/50';
+            img.className = 'message-img';
 
             var messageDiv = document.createElement('div');
             messageDiv.className = 'message';
@@ -44,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             var msgParts = msg.split(": ");
             usernameDiv.textContent = msgParts[0];
-            messageContent.textContent = msgParts.slice(1).join(": "); // Remover o prefixo
+            messageContent.textContent = msgParts.slice(1).join(": "); 
 
             messageText.appendChild(messageContent);
 
@@ -54,12 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (msg_username === loggedInUsername) {
                 item.classList.add('my-message');
-                // Posicionar a imagem à direita e o conteúdo à esquerda
                 item.appendChild(messageDiv);
                 item.appendChild(img);
             } else {
                 item.classList.add('other-message');
-                // Posicionar a imagem à esquerda e o conteúdo à direita
                 item.appendChild(img);
                 item.appendChild(messageDiv);
             }
@@ -69,6 +65,13 @@ document.addEventListener('DOMContentLoaded', () => {
         
         document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
     });
+
+    document.getElementById('message').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            sendMessage();
+            event.preventDefault();
+        }
+    });
 });
 
 function sendMessage() {
@@ -76,7 +79,6 @@ function sendMessage() {
     var socket = io();
     var chatId = window.chatId;
     var username = "{{ username }}";
-    console.log('Enviando mensagem:', username + ": " + message);
     socket.emit('message', { room: chatId, message: message });
     document.getElementById('message').value = '';
 }

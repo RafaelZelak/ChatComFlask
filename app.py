@@ -59,7 +59,7 @@ def login():
     user = validate_login(username, password)
     
     if user:
-        session['username'] = username  # Armazena o nome de usuário na sessão
+        session['username'] = username 
         return redirect(url_for('dashboard'))
     else:
         flash('Invalid username or password. Please try again.')

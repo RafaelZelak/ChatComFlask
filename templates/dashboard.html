@@ -6,21 +6,66 @@
     <title>Dashboard</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 60px;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            z-index: 10;
+        }
+        .profile-dropdown a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: black;
+            text-decoration: none;
+        }
+        .profile-dropdown a:hover {
+            background-color: #f3f4f6;
+        }
+        .profile-img {
+            width: 5.3rem;
+            height: 5.3rem;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body class="flex items-center justify-center h-screen bg-gradient-to-r from-purple-600 to-indigo-600">
-    <div class="container max-w-3xl bg-white p-8 rounded-lg shadow-lg relative">
-        <div class="absolute top-4 left-7 text-gray-700">
-            <h2 class="text-xl font-semibold">Olá, {{ username }}!</h2>
+<body class="flex items-center justify-center h-screen bg-gradient-to-r from-purple-500 to-indigo-500">
+    <div class="container max-w-4xl bg-white p-20 rounded-lg shadow-lg relative">
+        <div class="absolute top-5 left-5">
+            <div class="relative">
+                {% if user.image %}
+                    <img src="data:image/png;base64,{{ user.image }}" alt="Imagem de Perfil" class="profile-img" id="profileImage">
+                {% else %}
+                    <img src="https://via.placeholder.com/150" alt="Imagem de Perfil" class="profile-img" id="profileImage">
+                {% endif %}
+                <h2 class="text-xl font-semibold">Olá, {{ username }}!</h2>
+                <div id="profileDropdown" class="profile-dropdown">
+                    <a href="{{ url_for('configuracoes') }}" class="block mt-1 p-2 bg-blue-300 text-white font-semibold rounded-lg text-center shadow-lg hover:bg-red-400 transition duration-300">Configurações</a>
+                    <a href="{{ url_for('logout') }}" class="block mt-1 p-2 bg-red-300 text-white font-semibold rounded-lg text-center shadow-lg hover:bg-red-400 transition duration-300">
+                        Sair
+                    </a>
+                </div>
+            </div>
         </div>
-        <h1 class="text-4xl font-extrabold mb-8 text-center text-gray-800">Crie uma sala!</h1>
-        <form action="{{ url_for('create_chat') }}" method="post" class="flex items-center space-x-4 mb-6 justify-center">
+        <div class="absolute top-4 left-7 text-gray-700">
+            
+        </div>
+        <h1 class="text-4xl font-extrabold mb-8 text-center text-gray-800 relative top-10">Crie uma sala!</h1>
+        <form action="{{ url_for('create_chat') }}" method="post" class="flex items-center space-x-4 mb-6 justify-center relative top-10">
             <input type="text" name="chat_name" placeholder="Nome do Chat" class="flex-grow p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
             <button type="submit" class="p-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold rounded-lg shadow-lg hover:from-blue-600 hover:to-blue-800 transition duration-300">
                 Criar Chat
             </button>
         </form>
-        <h2 class="text-2xl font-semibold mb-4 text-gray-700">Chats:</h2>
-        <div class="overflow-y-auto max-h-80 salas">
+        <h2 class="text-2xl font-semibold mb-4 text-gray-700 relative top-10">Chats:</h2>
+        <div class="overflow-y-auto max-h-80 salas relative top-10">
             <ul class="space-y-4">
                 {% for chat in chats %}
                 <li class="p-1 bg-gray-50 rounded-lg shadow-md hover:bg-gray-200 transition duration-300">
@@ -31,9 +76,21 @@
                 {% endfor %}
             </ul>
         </div>
-        <a href="{{ url_for('logout') }}" class="block mt-10 p-2 bg-red-300 text-white font-semibold rounded-lg text-center shadow-lg hover:bg-red-400 transition duration-300">
-            Sair
-        </a>
     </div>
+    <script>
+        document.getElementById('profileImage').addEventListener('click', function() {
+            var dropdown = document.getElementById('profileDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // Fechar dropdown ao clicar fora dele
+        window.addEventListener('click', function(e) {
+            var profileImage = document.getElementById('profileImage');
+            var dropdown = document.getElementById('profileDropdown');
+            if (!profileImage.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>

@@ -67,7 +67,7 @@ body {
 
 .salas{
     scrollbar-width: thin;
-    scrollbar-color: #dfdfdf #f0f0f0;
+    scrollbar-color: #dfdfdf80 #ffffff;
 }
 #message {
     border-top-left-radius: 1rem;

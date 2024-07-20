@@ -208,7 +208,8 @@ def handle_join(data):
     username = session.get('username')
     room = data['room']
     join_room(room)
-    send(f'{username} entrou na sala.', room=room)
+    message = f'{username} entrou na sala.'
+    send({'username': 'System', 'message': message}, room=room)
 
 @socketio.on('message')
 def handle_message(data):

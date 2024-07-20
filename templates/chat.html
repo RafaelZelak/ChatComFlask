@@ -13,8 +13,8 @@
     </script>
     <script src="{{ url_for('static', filename='chat.js') }}" data-username="{{ session['username'] }}"></script>
 </head>
-<body class="flex items-center justify-center h-screen">
-    <div class="container w-full max-w-3xl p-6">
+<body class="flex items-center justify-center h-screen from-gray-200 via-gray-100 to-gray-200 ">
+    <div class="relative max-w-4xl w-full bg-white py-16 px-10 shadow-2xl border-4 border-black brutalist-border">
         <h1 class="text-4xl font-bold mb-6 text-center text-gray-700">Chat: {{ chat_name }}</h1>
         <div id="messages" class="overflow-auto h-96">
             {% for message in messages %}

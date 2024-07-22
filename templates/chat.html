@@ -13,8 +13,13 @@
     </script>
     <script src="{{ url_for('static', filename='chat.js') }}" data-username="{{ session['username'] }}"></script>
 </head>
-<body class="flex items-center justify-center h-screen from-gray-200 via-gray-100 to-gray-200 ">
+<body class="flex items-center justify-center h-screen bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 font-mono">
     <div class="relative max-w-4xl w-full bg-white py-16 px-10 shadow-2xl border-4 border-black brutalist-border">
+        <a class="back-button" href="{{ url_for('dashboard') }}">
+            <svg class="back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 11H7.83l5.58-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H19v-2z"/>
+            </svg>
+        </a>
         <h1 class="text-4xl font-bold mb-6 text-center text-gray-700">Chat: {{ chat_name }}</h1>
         <div id="messages" class="overflow-auto h-96">
             {% for message in messages %}
@@ -35,11 +40,11 @@
         </div>
         <div class="flex mt-6">
             <input id="message" class="flex-grow p-2 border border-gray-300 rounded-l" placeholder="Type a message..." autocomplete="off"/>
-            <button onclick="sendMessage()" class="custom-button p-2 bg-blue-500 text-white rounded-r">
+            <button onclick="sendMessage()" class="custom-button p-2 bg-blue-500 text-white">
                 Send
-                <svg class="send-icon ml-2 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M2.94 1.53l.84 3.36c.1.4.38.73.76.9L8.5 7.6a.5.5 0 01.29.45v5a1 1 0 001 1h1a1 1 0 001-1v-5a.5.5 0 01.29-.45l4-2c.38-.17.66-.5.76-.9l.84-3.36a.5.5 0 00-.68-.57L2.6 4.2a.5.5 0 00-.24.7l.58 1.16zm1.72 2.63L8 4.73V9h-.5A1.5 1.5 0 016 7.5v-1L3.66 4.9zM11 10.5v4h1v-4h-1z"/>
-                </svg>
+                <svg class="send-icon ml-2 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M2.01 21l20.99-9L2.01 3 2 10l15 2-15 2z"/>
+                  </svg>  
             </button>
         </div>
     </div>

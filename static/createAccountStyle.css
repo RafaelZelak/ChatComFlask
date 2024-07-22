@@ -1,0 +1,92 @@
+.container{
+    border-radius: 0;
+    border: 4px solid black;
+
+}
+
+.brutalist-border::before {
+    content: '';
+    position: absolute;
+    top: 1.2rem;
+    left: 1.2rem;
+    width: 100%;
+    height: 100%;
+    background: #a41dff; /* teal-400 */
+    z-index: -1;
+    border: 4px solid black;
+}
+
+input{
+    border: 4px solid black;
+}
+
+button{
+    border: 4px solid black;
+    background-color: #f0fcac;
+}
+
+.next-step, .final-step{
+    background-color: #f0fcac;
+    color: black;
+}
+.prev-step{
+    background-color: #ff6c6c7c;
+    color: black;   
+}
+
+.fixed-buttons {
+    position: absolute;
+    bottom: 80px;
+    width: 85%;
+}
+
+.progress-indicator {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .progress-indicator.border-2 {
+    border-width: 2px;
+}
+
+#password-strength {
+    height: 2px;
+    border-radius: 5px;
+    background-color: transparent;
+    transition: width 0.3s ease, background-color 0.3s ease;
+    min-width: 0;
+  }
+
+  #password-strength.weak {
+    background-color: red;
+  }
+
+  #password-strength.medium {
+    background-color: orange;
+  }
+
+  #password-strength.strong {
+    background-color: green;
+  }
+  #password-match.mismatch {
+    color: red;
+  }
+  #password-match.match {
+    color: green;
+  }
+
+  .relative {
+    position: relative;
+}
+#toggle-password, #toggle-confirm-password {
+    position: absolute;
+    right: 0.75rem;
+    top: 60%;
+    transform: translateY(-50%);
+    font-size: 1.25rem;
+}
+#toggle-confirm-password{
+    top:70%;
+}
+#password-match{
+    position: absolute;
+}

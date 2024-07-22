@@ -5,20 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configurações do Usuário</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        .profile-image {
-            width: 6rem; /* Ajuste o tamanho conforme necessário */
-            height: 6rem;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='configStyle.css') }}">
+
 </head>
-<body class="from-gray-200 via-gray-100 to-gray-200">
-    <div class="container mx-auto p-4">
+<body class="bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 font-mono">
+    <div class="container brutalist-border">
         <h1 class="text-3xl font-bold mb-4">Configurações do Usuário</h1>
         
-        <div class="bg-white p-6 rounded-lg shadow-md mb-4">
+        <div class="bg-white p-6 mb-4">
             <h2 class="text-2xl font-semibold mb-2">Informações Atuais</h2>
             <div class="flex items-center space-x-4">
                 {% if user.image %}
@@ -32,31 +26,30 @@
             </div>
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md mb-4">
+        <div class="bg-white p-6 mb-4">
             <h2 class="text-2xl font-semibold mb-2">Alterar Nome de Usuário</h2>
             <form action="{{ url_for('alterar_nome') }}" method="POST" class="flex items-center space-x-4">
-                <input type="text" name="username" class="border p-2 rounded w-full" placeholder="Novo Nome de Usuário">
-                <button type="submit" class="bg-blue-500 text-white p-2 rounded">Atualizar Nome</button>
+                <input type="text" name="username" placeholder="Novo Nome de Usuário">
+                <button type="submit">Atualizar Nome</button>
             </form>
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md mb-4">
+        <div class="bg-white p-6 mb-4">
             <h2 class="text-2xl font-semibold mb-2">Alterar Senha</h2>
             <form action="{{ url_for('alterar_senha') }}" method="POST" class="flex items-center space-x-4">
-                <input type="password" name="password" class="border p-2 rounded w-full" placeholder="Nova Senha">
-                <button type="submit" class="bg-blue-500 text-white p-2 rounded">Atualizar Senha</button>
+                <input type="password" name="password" placeholder="Nova Senha">
+                <button type="submit">Atualizar Senha</button>
             </form>
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md">
+        <div class="bg-white p-6">
             <h2 class="text-2xl font-semibold mb-2">Alterar Imagem de Perfil</h2>
             <form action="{{ url_for('alterar_imagem') }}" method="POST" enctype="multipart/form-data" class="flex items-center space-x-4">
-                <input type="file" name="image" class="border p-2 rounded w-full">
-                <button type="submit" class="bg-blue-500 text-white p-2 rounded">Atualizar Imagem</button>
+                <input type="file" name="image">
+                <button type="submit">Atualizar Imagem</button>
             </form>
         </div>
-        <a href="{{ url_for('dashboard') }}" class="block mt-10 p-2 bg-blue-300 text-white font-semibold rounded-lg text-center shadow-lg hover:bg-blue-500 transition duration-300">Voltar</a>
-
+        <a href="{{ url_for('dashboard') }}" class="block mt-10 p-2 bg-blue-300 text-white font-semibold rounded-lg text-center shadow-lg hover:bg-blue-500 transition duration-300 btn-voltar">Voltar</a>
     </div>
 </body>
 </html>

@@ -5,37 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
     <!-- Adicione o link para o CSS do Tailwind -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='createAccountStyle.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body class="bg-gray-100 h-screen flex items-center justify-center">
-    <div class="max-w-md w-full bg-white p-8 rounded shadow-lg">
+<body class="bg-gray-100 h-screen flex items-center justify-center font-mono">
+    <div class="w-full max-w-md bg-white p-8 shadow-lg container brutalist-border" style="height: 80%; position: absolute;">
         <h2 class="text-2xl font-bold mb-8 text-center">Cadastro</h2>
+
+        <!-- Barra de Progresso -->
+        <div class="flex justify-between items-center mb-8">
+            <div class="flex-1 flex items-center">
+                <div class="flex flex-col items-center">
+                    <div class="w-10 h-10 flex items-center justify-center rounded-full progress-indicator border-2">1</div>
+                    <span class="mt-2 text-xs">Informações</span>
+                </div>
+            </div>
+            <div class="flex-1 h-1 bg-gray-200"></div>
+            <div class="flex-1 flex items-center">
+                <div class="flex flex-col items-center">
+                    <div class="w-10 h-10 flex items-center justify-center rounded-full progress-indicator border-2">2</div>
+                    <span class="mt-2 text-xs">Contato</span>
+                </div>
+            </div>
+            <div class="flex-1 h-1 bg-gray-200"></div>
+            <div class="flex-1 flex items-center">
+                <div class="flex flex-col items-center">
+                    <div class="w-10 h-10 flex items-center justify-center rounded-full progress-indicator border-2">3</div>
+                    <span class="mt-2 text-xs">Senha</span>
+                </div>
+            </div>
+        </div>
+
         <form action="{{ url_for('criar_conta_db') }}" method="POST">
-            <div class="mb-4">
-                <label for="username" class="block text-sm font-medium text-gray-700">Usuário</label>
-                <input type="text" id="username" name="username" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+            <!-- Passo 1 -->
+            <div class="step">
+                <div class="mb-4">
+                    <label for="name" class="block text-sm font-medium text-gray-700">Nome</label>
+                    <input type="text" id="name" name="name" class="mt-1 block w-full px-3 py-2 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="text" id="email" name="email" class="mt-1 block w-full px-3 py-2 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+                </div>
+                <div class="mb-4">
+                    <label for="username" class="block text-sm font-medium text-gray-700">Usuário</label>
+                    <input type="text" id="username" name="username" class="mt-1 block w-full px-3 py-2 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+                </div>
+                <div class="flex justify-between fixed-buttons">
+                    <button type="button" class="next-step font-bold py-2 px-4 focus:outline-none focus:shadow-outline">Próximo</button>
+                </div>
             </div>
-            <div class="mb-4">
-                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                <input type="text" id="email" name="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+            <!-- Passo 2 -->
+            <div class="step hidden">
+                <div class="mb-4">
+                    <label for="country" class="block text-sm font-medium text-gray-700">País</label>
+                    <input type="text" id="country" name="country" class="mt-1 block w-full px-3 py-2 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+                </div>
+                <div class="mb-4">
+                    <label for="address" class="block text-sm font-medium text-gray-700">Endereço</label>
+                    <input type="text" id="address" name="address" class="mt-1 block w-full px-3 py-2 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+                </div>
+                <div class="mb-4">
+                    <label for="phone" class="block text-sm font-medium text-gray-700">Telefone</label>
+                    <input type="text" id="phone" name="phone" class="mt-1 block w-full px-3 py-2 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+                </div>
+                <div class="mb-4">
+                    <label for="dob" class="block text-sm font-medium text-gray-700">Data de Nascimento</label>
+                    <input type="date" id="dob" name="dob" class="mt-1 block w-full px-3 py-2 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+                </div>
+                <div class="flex justify-between fixed-buttons">
+                    <button type="button" class="prev-step font-bold py-2 px-4 focus:outline-none focus:shadow-outline">Anterior</button>
+                    <button type="button" class="next-step font-bold py-2 px-4 focus:outline-none focus:shadow-outline">Próximo</button>
+                </div>
             </div>
-            <div class="mb-4">
-                <label for="password" class="block text-sm font-medium text-gray-700">Senha</label>
-                <input type="password" id="password" name="password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
-            </div>
-            <div class="mb-4">
-                <label for="idade" class="block text-sm font-medium text-gray-700">Idade</label>
-                <input type="text" id="idade" name="idade" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
-            </div>
-           
-            <div class="mb-6">
-                <button type="submit" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cadastrar</button>
+            <!-- Passo 3 -->
+            <div class="step hidden">
+                <div class="mb-4 relative">
+                    <label for="password" class="block text-sm font-medium text-gray-700">Senha</label>
+                    <input type="password" id="password" name="password" class="mt-1 block w-full px-3 py-2 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+                    <i id="toggle-password" class="fas fa-eye absolute right-3 top-8 cursor-pointer text-gray-500"></i>
+                    <div id="password-strength" class="mt-2 h-2 rounded-md"></div>
+                </div>
+                <div class="mb-4 relative">
+                    <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirmar Senha</label>
+                    <input type="password" id="confirm_password" name="confirm_password" class="mt-1 block w-full px-3 py-2 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+                    <div id="password-match" class="text-sm mt-1"></div>
+                    <i id="toggle-confirm-password" class="fas fa-eye absolute right-3 top-8 cursor-pointer text-gray-500"></i>
+                </div>
+                <div class="flex justify-between fixed-buttons">
+                    <button type="button" class="prev-step font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Anterior</button>
+                    <button type="submit" class="final-step font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cadastrar</button>
+                </div>
             </div>
         </form>
-        <div class="text-center">
-            <p class="text-sm">Já tem uma conta?</p>
-            <button class="text-blue-500 hover:text-blue-700 focus:outline-none">Entrar</button>
+        <div class="text-center mt-4" style="position:absolute; bottom:0px; top: 92%;left: 50%; transform: translate(-50%, -50%);">
+            <p class="text-lg font-bold text-black">Já tem uma conta? </p>
+                <a href="{{ url_for('index') }}" class="text-indigo-500 hover:underline">Entre aqui</a>
         </div>
     </div>
+    <script src="{{ url_for('static', filename='createAccount.js') }}" data-username="{{ session['username'] }}"></script>
 </body>
 </html>

@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="flex items-center justify-center h-screen bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200">
+<body class="flex items-center justify-center h-screen bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 font-mono">
     <div class="relative max-w-4xl w-full bg-white py-16 px-10 shadow-2xl border-4 border-black brutalist-border">
         <div class="absolute top-10 left-10 flex items-center space-x-4">
             <div class="relative">
@@ -18,19 +18,15 @@
                 {% endif %}
             </div>
             <h2 class="text-2xl font-semibold">Olá, {{ username }}!</h2>
-            <div id="profileDropdown" class="profile-dropdown">
-                <a href="{{ url_for('configuracoes') }}" class="block mt-1 p-2 bg-blue-300 text-white font-semibold rounded-lg text-center shadow-lg hover:bg-red-400 transition duration-300">Configurações</a>
-                <a href="{{ url_for('logout') }}" class="block mt-1 p-2 bg-red-300 text-white font-semibold rounded-lg text-center shadow-lg hover:bg-red-400 transition duration-300">
-                    Sair
-                </a>
+            <div id="profileDropdown" class="profile-dropdown dropdown-enter">
+                <a href="{{ url_for('configuracoes') }}" class="block mt-1 p-2 bg-blue-300 text-white font-semibold rounded-lg text-center shadow-lg hover:bg-blue-400 transition duration-300">Configurações</a>
+                <a href="{{ url_for('logout') }}" class="block mt-1 p-2 bg-red-300 text-white font-semibold rounded-lg text-center shadow-lg hover:bg-red-400 transition duration-300">Sair</a>
             </div>
         </div>
         <h1 class="text-4xl font-extrabold mb-12 text-center text-gray-800 mt-16">Crie uma sala!</h1>
         <form action="{{ url_for('create_chat') }}" method="post" class="flex items-center space-x-4 mb-12 justify-center">
             <input type="text" name="chat_name" placeholder="Nome do Chat" class="flex-grow p-3 border-2 border-black rounded-none shadow-lg focus:outline-none focus:ring-2 focus:ring-black" required>
-            <button type="submit" class="p-3 bg-black text-white font-semibold rounded-none shadow-lg hover:bg-gray-800 transition duration-300">
-                Criar Chat
-            </button>
+            <button type="submit" class="p-3 bg-black text-white font-semibold rounded-none shadow-lg hover:bg-gray-800 transition duration-300">Criar Chat</button>
         </form>
         <h2 class="text-2xl font-semibold mb-4 text-gray-700">Chats:</h2>
         <div class="overflow-y-auto max-h-80 salas">
@@ -48,17 +44,22 @@
     <script>
         document.getElementById('profileImage').addEventListener('click', function() {
             var dropdown = document.getElementById('profileDropdown');
-            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+            var isVisible = dropdown.classList.contains('dropdown-enter-active');
+            dropdown.classList.toggle('dropdown-enter-active', !isVisible);
+            dropdown.classList.toggle('dropdown-exit-active', isVisible);
         });
-
-        // Fechar dropdown ao clicar fora dele
+        
         window.addEventListener('click', function(e) {
             var profileImage = document.getElementById('profileImage');
             var dropdown = document.getElementById('profileDropdown');
             if (!profileImage.contains(e.target) && !dropdown.contains(e.target)) {
-                dropdown.style.display = 'none';
+                if (dropdown.classList.contains('dropdown-enter-active')) {
+                    dropdown.classList.remove('dropdown-enter-active');
+                    dropdown.classList.add('dropdown-exit-active');
+                }
             }
         });
+        
     </script>
 </body>
 </html>
